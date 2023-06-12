@@ -1,0 +1,8 @@
+version: '3'
+services:
+  warehouse-full:
+    image: warehouse-full
+    container_name: warehouse-full
+    restart: always
+    ports:
+      - "8007:8007"

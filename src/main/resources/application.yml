@@ -1,0 +1,54 @@
+server:
+  port: 8007
+
+spring:
+  task:
+    scheduling:
+      enable: true
+  profiles:
+    active: @activatedProperties@
+  datasource:
+    hikari:
+      minimum-idle: 0
+      initialization-fail-timeout: -1
+      connection-timeout: 20000
+      idle-timeout: 15000
+      maximum-pool-size: 15
+    continue-on-error: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 30
+          order_inserts: true
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+    open-in-view: false
+
+logging:
+  path: /log
+  level:
+    root: INFO
+    com.scg.service: TRACE
+    org.springframework.web: INFO
+    org.springframework.web.HttpLogging: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    pl.com.computerplus.murapol.warehousefull.warehouse.services.*: INFO
+    pl.com.computerplus.murapol.warehousefull.warehouse.controllers.*: INFO
+
+# PROFILES - PROD
+---
+
+spring:
+  profiles: prod
+  datasource-warehouse-full:
+      jdbc-url: jdbc:sqlserver://localhost:1433;databaseName=WH_CONFIGURATIONS;encrypt=true;trustServerCertificate=true;
+      username: sa
+      password: test
